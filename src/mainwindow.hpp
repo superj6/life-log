@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTextEdit>
+#include <QLineEdit>
 #include <QPushButton>
 #include <QListWidget>
 #include <QGroupBox>
@@ -10,8 +11,11 @@
 class MainWindow : public QMainWindow{
   Q_OBJECT
 private:
-  QTextEdit *inputField;
-  QPushButton *submitButton;
+  QLineEdit *dateInput;
+  QLineEdit *timeInput;
+  QLineEdit *levelInput;
+  QTextEdit *descriptionInput;
+  QPushButton *insertButton;
   QListWidget *listOutputs;
 
   QGroupBox *createInputUI();

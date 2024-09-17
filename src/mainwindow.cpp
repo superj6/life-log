@@ -1,12 +1,13 @@
 #include "mainwindow.hpp"
 
-#include <QVBoxLayout>
+#include <QLayout>
 #include <QGroupBox>
+#include <QLabel>
 
 #include <QDebug>
 
 void MainWindow::onSubmitClicked(){
-  QString input = inputField->toPlainText();
+  QString input = descriptionInput->toPlainText();
 
   //qDebug() << input;
 
@@ -16,15 +17,27 @@ void MainWindow::onSubmitClicked(){
   listOutputs->addItem(listItem);
 }
 
-QGroupBox *MainWindow::createInputUI(){ 
-  inputField = new QTextEdit(this);
-  submitButton = new QPushButton("Submit", this);
+QGroupBox *MainWindow::createInputUI(){
+  dateInput = new QLineEdit;
+  timeInput = new QLineEdit;
+  levelInput = new QLineEdit;
+  descriptionInput = new QTextEdit;
+  insertButton = new QPushButton(tr("Insert Log"));
 
-  connect(submitButton, SIGNAL(clicked(bool)), this, SLOT(onSubmitClicked()));
+  connect(insertButton, SIGNAL(clicked(bool)), this, SLOT(onSubmitClicked()));
 
-  QVBoxLayout *layout = new QVBoxLayout;
-  layout->addWidget(inputField);
-  layout->addWidget(submitButton);
+  QGridLayout *layout = new QGridLayout;
+  layout->addWidget(new QLabel(tr("Date")), 0, 0);
+  layout->addWidget(new QLabel(tr("Time")), 0, 1);
+  layout->addWidget(new QLabel(tr("Level")), 0, 2);
+
+  layout->addWidget(dateInput, 1, 0);
+  layout->addWidget(timeInput, 1, 1);
+  layout->addWidget(levelInput, 1, 2);
+
+  layout->addWidget(new QLabel(tr("Description")), 2, 0);
+  layout->addWidget(descriptionInput, 3, 0, 2, 3);
+  layout->addWidget(insertButton, 5, 1);
 
   QGroupBox *groupBox = new QGroupBox;
   groupBox->setLayout(layout);
@@ -35,11 +48,11 @@ QGroupBox *MainWindow::createInputUI(){
 QGroupBox *MainWindow::createDisplayUI(){
   listOutputs = new QListWidget;
 
-  QVBoxLayout *displayVLayout = new QVBoxLayout;
-  displayVLayout->addWidget(listOutputs);
+  QVBoxLayout *layout = new QVBoxLayout;
+  layout->addWidget(listOutputs);
 
   QGroupBox *groupBox = new QGroupBox;
-  groupBox->setLayout(displayVLayout);
+  groupBox->setLayout(layout);
 
   return groupBox;
 }
@@ -51,6 +64,7 @@ void MainWindow::createMainUI(QGroupBox *inputGroupBox, QGroupBox *displayGroupB
 
   QWidget *centralWidget = new QWidget(this);
   centralWidget->setLayout(layout);
+  
   setCentralWidget(centralWidget);
 }
 
