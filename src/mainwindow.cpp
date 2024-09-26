@@ -6,7 +6,7 @@
 
 #include <QDebug>
 
-void MainWindow::onSubmitClicked(){
+void MainWindow::onInsertClicked(){
   QString input = descriptionInput->toPlainText();
 
   //qDebug() << input;
@@ -17,14 +17,18 @@ void MainWindow::onSubmitClicked(){
   listOutputs->addItem(listItem);
 }
 
+void MainWindow::onFilterClicked(){
+  
+}
+
 QGroupBox *MainWindow::createInputUI(){
   dateInput = new QLineEdit;
   timeInput = new QLineEdit;
   levelInput = new QLineEdit;
   descriptionInput = new QTextEdit;
-  insertButton = new QPushButton(tr("Insert Log"));
+  insertButton = new QPushButton(tr("Insert"));
 
-  connect(insertButton, SIGNAL(clicked(bool)), this, SLOT(onSubmitClicked()));
+  connect(insertButton, SIGNAL(clicked(bool)), this, SLOT(onInsertClicked()));
 
   QGridLayout *layout = new QGridLayout;
   layout->addWidget(new QLabel(tr("Date")), 0, 0);
@@ -46,10 +50,27 @@ QGroupBox *MainWindow::createInputUI(){
 }
 
 QGroupBox *MainWindow::createDisplayUI(){
+  startDateFilter = new QLineEdit;
+  endDateFilter = new QLineEdit;
+  levelFilter = new QLineEdit;
+  filterButton = new QPushButton(tr("Filter"));
   listOutputs = new QListWidget;
 
-  QVBoxLayout *layout = new QVBoxLayout;
-  layout->addWidget(listOutputs);
+  connect(filterButton, SIGNAL(clicked(bool)), this, SLOT(onFilterClicked()));
+
+  QGridLayout *layout = new QGridLayout;
+  layout->addWidget(new QLabel(tr("Start Date")), 0, 0);
+  layout->addWidget(new QLabel(tr("End Date")), 0, 1);
+  layout->addWidget(new QLabel(tr("Level Cutoff")), 0, 2);
+
+  layout->addWidget(startDateFilter, 1, 0);
+  layout->addWidget(endDateFilter, 1, 1);
+  layout->addWidget(levelFilter, 1, 2);
+
+  layout->addWidget(filterButton, 2, 1);
+  
+  layout->addWidget(new QLabel(tr("Logs")), 3, 0);
+  layout->addWidget(listOutputs, 4, 0, 2, 3);
 
   QGroupBox *groupBox = new QGroupBox;
   groupBox->setLayout(layout);

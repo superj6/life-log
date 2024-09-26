@@ -16,13 +16,19 @@ private:
   QLineEdit *levelInput;
   QTextEdit *descriptionInput;
   QPushButton *insertButton;
+  
+  QLineEdit *startDateFilter;
+  QLineEdit *endDateFilter;
+  QLineEdit *levelFilter;
+  QPushButton *filterButton;
   QListWidget *listOutputs;
 
   QGroupBox *createInputUI();
   QGroupBox *createDisplayUI();
   void createMainUI(QGroupBox *inputGroupBox, QGroupBox *displayGroupBox);
 private slots:
-  void onSubmitClicked();
+  void onInsertClicked();
+  void onFilterClicked();
 public:
   MainWindow(QWidget *parent = nullptr);
 };
