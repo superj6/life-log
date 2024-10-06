@@ -24,7 +24,6 @@ private:
   QLineEdit *startDateFilter;
   QLineEdit *endDateFilter;
   QLineEdit *levelFilter;
-  QPushButton *filterButton;
   QListWidget *listOutputs;
 
   rapidcsv::Document logDataDoc;
@@ -38,7 +37,7 @@ private:
   void createMainUI(QGroupBox *inputGroupBox, QGroupBox *displayGroupBox);
 private slots:
   void onInsertClicked();
-  void onFilterClicked();
+  void onFilterChanged();
 public:
   MainWindow(QWidget *parent = nullptr);
 };

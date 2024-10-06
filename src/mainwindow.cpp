@@ -8,15 +8,13 @@
 
 namespace rapidcsv{
   template<>
-  void Converter<QString>::ToVal(const std::string& pStr, QString& pVal) const
-  {
+  void Converter<QString>::ToVal(const std::string& pStr, QString& pVal) const{
     pVal = QString::fromStdString(pStr);
   }
 
 
   template<>
-  void Converter<QString>::ToStr(const QString& pVal, std::string& pStr) const
-  {
+  void Converter<QString>::ToStr(const QString& pVal, std::string& pStr) const{
     pStr = pVal.toStdString();
   }
 }
@@ -65,7 +63,7 @@ void MainWindow::onInsertClicked(){
   displayLogData();
 }
 
-void MainWindow::onFilterClicked(){
+void MainWindow::onFilterChanged(){
   displayLogData();
 }
 
@@ -103,12 +101,13 @@ QGroupBox *MainWindow::createDisplayUI(){
   startDateFilter = new QLineEdit;
   endDateFilter = new QLineEdit;
   levelFilter = new QLineEdit;
-  filterButton = new QPushButton(tr("Filter"));
   listOutputs = new QListWidget;
 
   listOutputs->setWordWrap(true);
 
-  connect(filterButton, SIGNAL(clicked(bool)), this, SLOT(onFilterClicked()));
+  connect(startDateFilter, SIGNAL(textChanged(const QString &)), this, SLOT(onFilterChanged()));
+  connect(endDateFilter, SIGNAL(textChanged(const QString &)), this, SLOT(onFilterChanged()));
+  connect(levelFilter, SIGNAL(textChanged(const QString &)), this, SLOT(onFilterChanged()));
 
   QGridLayout *layout = new QGridLayout;
   layout->addWidget(new QLabel(tr("Start Date")), 0, 0);
@@ -118,11 +117,9 @@ QGroupBox *MainWindow::createDisplayUI(){
   layout->addWidget(startDateFilter, 1, 0);
   layout->addWidget(endDateFilter, 1, 1);
   layout->addWidget(levelFilter, 1, 2);
-
-  layout->addWidget(filterButton, 2, 1);
-  
-  layout->addWidget(new QLabel(tr("Logs")), 3, 0);
-  layout->addWidget(listOutputs, 4, 0, 2, 3);
+ 
+  layout->addWidget(new QLabel(tr("Logs")), 2, 0);
+  layout->addWidget(listOutputs, 3, 0, 3, 3);
 
   layout->setRowStretch(5, 1);
 
