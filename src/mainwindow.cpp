@@ -58,7 +58,7 @@ void MainWindow::onInsertClicked(){
 
   std::vector<QString> row = {dateInput->text(), timeInput->text(), levelInput->text(), input};
   logDataDoc.InsertRow(logDataDoc.GetRowCount(), row);
-  logDataDoc.Save("resources/log.csv");
+  logDataDoc.Save();
 
   displayLogData();
 }
