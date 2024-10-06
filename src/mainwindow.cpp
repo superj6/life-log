@@ -80,6 +80,8 @@ QGroupBox *MainWindow::createInputUI(){
   layout->addWidget(descriptionInput, 3, 0, 2, 3);
   layout->addWidget(insertButton, 5, 1);
 
+  layout->setRowStretch(4, 1);
+
   QGroupBox *groupBox = new QGroupBox;
   groupBox->setLayout(layout);
 
@@ -110,6 +112,8 @@ QGroupBox *MainWindow::createDisplayUI(){
   
   layout->addWidget(new QLabel(tr("Logs")), 3, 0);
   layout->addWidget(listOutputs, 4, 0, 2, 3);
+
+  layout->setRowStretch(5, 1);
 
   QGroupBox *groupBox = new QGroupBox;
   groupBox->setLayout(layout);
