@@ -12,6 +12,13 @@ namespace rapidcsv{
   {
     pVal = QString::fromStdString(pStr);
   }
+
+
+  template<>
+  void Converter<QString>::ToStr(const QString& pVal, std::string& pStr) const
+  {
+    pStr = pVal.toStdString();
+  }
 }
 
 void MainWindow::loadLogData(){
@@ -50,6 +57,10 @@ void MainWindow::displayLogData(){
 
 void MainWindow::onInsertClicked(){
   QString input = descriptionInput->toPlainText();
+
+  std::vector<QString> row = {dateInput->text(), timeInput->text(), levelInput->text(), input};
+  logDataDoc.InsertRow(logDataDoc.GetRowCount(), row);
+  logDataDoc.Save("resources/log.csv");
 
   displayLogData();
 }
