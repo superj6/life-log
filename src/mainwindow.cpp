@@ -44,6 +44,8 @@ std::vector<std::vector<QString>> MainWindow::getFilteredLogData(){
 void MainWindow::displayLogData(){
   std::vector<std::vector<QString>> logData = getFilteredLogData();
   
+  sort(logData.begin(), logData.end());
+
   listOutputs->clear();
   for(auto row : logData){
     QListWidgetItem *listItem = new QListWidgetItem;
