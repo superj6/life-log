@@ -1,12 +1,16 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include "rapidcsv.h"
+
 #include <QMainWindow>
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QListWidget>
 #include <QGroupBox>
+
+#include <vector>
 
 class MainWindow : public QMainWindow{
   Q_OBJECT
@@ -22,6 +26,12 @@ private:
   QLineEdit *levelFilter;
   QPushButton *filterButton;
   QListWidget *listOutputs;
+
+  rapidcsv::Document logDataDoc;
+
+  void loadLogData();
+  std::vector<std::vector<std::string>> getFilteredLogData();
+  void displayLogData();
 
   QGroupBox *createInputUI();
   QGroupBox *createDisplayUI();

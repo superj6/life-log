@@ -2,11 +2,11 @@ QT = core widgets
 TEMPLATE = app
 TARGET = life-log
 
-INCLUDEPATH += src/
+INCLUDEPATH += src/ include/
 
 # Input
 SOURCES += src/*.cpp
-HEADERS += src/*.hpp
+HEADERS += src/*.hpp include/*.h
 
 #output
 DESTDIR = bin

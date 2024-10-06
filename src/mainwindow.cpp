@@ -6,19 +6,42 @@
 
 #include <QDebug>
 
+void MainWindow::loadLogData(){
+  logDataDoc = rapidcsv::Document("resources/log.csv");
+}
+
+std::vector<std::vector<std::string>> MainWindow::getFilteredLogData(){
+  std::vector<std::vector<std::string>> logData;
+  for(unsigned int i = 0; i < logDataDoc.GetRowCount(); i++){
+    logData.push_back(logDataDoc.GetRow<std::string>(i));
+  }
+  return logData;
+}
+
+void MainWindow::displayLogData(){
+  std::vector<std::vector<std::string>> logData = getFilteredLogData();
+  
+  listOutputs->clear();
+  for(auto row : logData){
+    QListWidgetItem *listItem = new QListWidgetItem;
+    QString listItemText = QString("%1 %2 %3 - %4").arg(
+        QString::fromStdString(row[0]), 
+        QString::fromStdString(row[1]), 
+        QString::fromStdString(row[2]), 
+        QString::fromStdString(row[3])); 
+    listItem->setText(listItemText);
+    listOutputs->addItem(listItem);
+  }
+}
+
 void MainWindow::onInsertClicked(){
   QString input = descriptionInput->toPlainText();
 
-  //qDebug() << input;
-
-  QListWidgetItem *listItem = new QListWidgetItem;
-  listItem->setText(input);
-
-  listOutputs->addItem(listItem);
+  displayLogData();
 }
 
 void MainWindow::onFilterClicked(){
-  
+  displayLogData();
 }
 
 QGroupBox *MainWindow::createInputUI(){
@@ -55,6 +78,8 @@ QGroupBox *MainWindow::createDisplayUI(){
   levelFilter = new QLineEdit;
   filterButton = new QPushButton(tr("Filter"));
   listOutputs = new QListWidget;
+
+  listOutputs->setWordWrap(true);
 
   connect(filterButton, SIGNAL(clicked(bool)), this, SLOT(onFilterClicked()));
 
@@ -94,4 +119,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent){
   QGroupBox *displayGroupBox = createDisplayUI();
 
   createMainUI(inputGroupBox, displayGroupBox);
+
+  loadLogData();
+  displayLogData();
 }
