@@ -6,29 +6,43 @@
 
 #include <QDebug>
 
+namespace rapidcsv{
+  template<>
+  void Converter<QString>::ToVal(const std::string& pStr, QString& pVal) const
+  {
+    pVal = QString::fromStdString(pStr);
+  }
+}
+
 void MainWindow::loadLogData(){
   logDataDoc = rapidcsv::Document("resources/log.csv");
 }
 
-std::vector<std::vector<std::string>> MainWindow::getFilteredLogData(){
-  std::vector<std::vector<std::string>> logData;
+std::vector<std::vector<QString>> MainWindow::getFilteredLogData(){
+  std::vector<std::vector<QString>> logData;
   for(unsigned int i = 0; i < logDataDoc.GetRowCount(); i++){
-    logData.push_back(logDataDoc.GetRow<std::string>(i));
+    std::vector<QString> row = logDataDoc.GetRow<QString>(i);
+    if(!startDateFilter->text().isEmpty() && row[0] < startDateFilter->text()){
+      continue;
+    }
+    if(!endDateFilter->text().isEmpty() && row[0] > endDateFilter->text()){
+      continue;
+    }
+    if(!levelFilter->text().isEmpty() && row[2] < levelFilter->text()){
+      continue;
+    }
+    logData.push_back(std::move(row));
   }
   return logData;
 }
 
 void MainWindow::displayLogData(){
-  std::vector<std::vector<std::string>> logData = getFilteredLogData();
+  std::vector<std::vector<QString>> logData = getFilteredLogData();
   
   listOutputs->clear();
   for(auto row : logData){
     QListWidgetItem *listItem = new QListWidgetItem;
-    QString listItemText = QString("%1 %2 %3 - %4").arg(
-        QString::fromStdString(row[0]), 
-        QString::fromStdString(row[1]), 
-        QString::fromStdString(row[2]), 
-        QString::fromStdString(row[3])); 
+    QString listItemText = QString("%1 %2 %3 - %4").arg(row[0], row[1], row[2], row[3]); 
     listItem->setText(listItemText);
     listOutputs->addItem(listItem);
   }

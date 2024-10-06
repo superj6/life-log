@@ -30,7 +30,7 @@ private:
   rapidcsv::Document logDataDoc;
 
   void loadLogData();
-  std::vector<std::vector<std::string>> getFilteredLogData();
+  std::vector<std::vector<QString>> getFilteredLogData();
   void displayLogData();
 
   QGroupBox *createInputUI();
