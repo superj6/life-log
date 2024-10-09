@@ -91,7 +91,7 @@ QGroupBox *MainWindow::createInputUI(){
   layout->addWidget(descriptionInput, 3, 0, 2, 3);
   layout->addWidget(insertButton, 5, 1);
 
-  layout->setRowStretch(4, 1);
+  layout->setRowStretch(6, 1);
 
   QGroupBox *groupBox = new QGroupBox;
   groupBox->setLayout(layout);
@@ -104,6 +104,7 @@ QGroupBox *MainWindow::createDisplayUI(){
   endDateFilter = new QLineEdit;
   levelFilter = new QLineEdit;
   listOutputs = new QListWidget;
+  removeButton = new QPushButton(tr("Remove"));
 
   listOutputs->setWordWrap(true);
 
@@ -121,9 +122,10 @@ QGroupBox *MainWindow::createDisplayUI(){
   layout->addWidget(levelFilter, 1, 2);
  
   layout->addWidget(new QLabel(tr("Logs")), 2, 0);
-  layout->addWidget(listOutputs, 3, 0, 3, 3);
+  layout->addWidget(listOutputs, 3, 0, 2, 3);
+  layout->addWidget(removeButton, 5, 1);
 
-  layout->setRowStretch(5, 1);
+  layout->setRowStretch(4, 1);
 
   QGroupBox *groupBox = new QGroupBox;
   groupBox->setLayout(layout);

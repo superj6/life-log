@@ -25,6 +25,7 @@ private:
   QLineEdit *endDateFilter;
   QLineEdit *levelFilter;
   QListWidget *listOutputs;
+  QPushButton *removeButton;
 
   rapidcsv::Document logDataDoc;
 
